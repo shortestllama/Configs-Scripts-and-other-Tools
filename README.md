@@ -17,3 +17,7 @@ Currently set to copy challenge\*.py files to the notes.md and backup.md files i
 The name of the python file is easily changeable.
 I haven't tried changing the notes.md file, backup.md file, or the fact that they're in a directory.
 Changing every instance of 'assignment' in this file will change the name of the file to copy and the directory to copy to.
+
+## website_posts_date_vimrc
+Extra .vimrc file to rename any newly created post for the website with the date of creation and add front matter to it immediately upon creation with vim.
+Seems like it might be able to work if the file was touched, then opened with vim, but have not tested this.
