@@ -2,7 +2,7 @@
 This repo contains files that make life easier - vimrc files, powershell scripts, etc.
 
 ## kali-vimrc
-Pretty standard - tabs, not spaces and added the set command to turn spell-check on in .txt and .md files.
+Pretty standard - tabs, not spaces and includes the set spell command to turn spell-check on in .txt and .md files.
 Also allows for .vimrc files placed in subdirectories to be appended to the master .vimrc.
 
 ## reminder_commands
