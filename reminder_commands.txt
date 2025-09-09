@@ -1,0 +1,29 @@
+# ALL IN ADMIN POWERSHELL
+
+# INSTALL:
+Install-Module BurntToast -Scope CurrentUser -Force
+
+# MAKE REMINDER SCRIPT:
+New-Item -Type Directory -Force C:\Scripts | Out-Null
+@'
+Add-Type -AssemblyName PresentationFramework
+[System.Windows.MessageBox]::Show('Document progress','Reminder',[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information) | Out-Null
+'@ | Set-Content C:\Scripts\reminder.ps1
+
+# MAKE QUIET LAUNCHER SCRIPT:
+@'
+Set sh = CreateObject("WScript.Shell")
+sh.Run "powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Scripts\reminder.ps1", 0
+'@ | Set-Content C:\Scripts\runReminder.vbs
+
+# SCHEDULE SCRIPT TO EXECUTE EVERY 30 MINUTES:
+schtasks /create /f /sc MINUTE /mo 30 /tn "Document Progress Reminder" /tr "wscript.exe C:\Scripts\runReminder.vbs" /IT /RL LIMITED /RU "$env:USERNAME"
+
+# RUN IMMEDIATELY:
+schtasks /run /tn "Document Progress Reminder"
+
+# SCHEDULE SCRIPT TO EXECUTE EVERY 1 MINUTE:
+schtasks /create /f /sc MINUTE /mo 1 /tn "Document Progress Reminder" /tr "wscript.exe C:\Scripts\runReminder.vbs" /IT /RL LIMITED /RU "$env:USERNAME"
+
+# DELETE:
+schtasks /delete /f /tn "Document Progress Reminder" 2>$null

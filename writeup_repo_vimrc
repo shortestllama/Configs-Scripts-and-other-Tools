@@ -1,0 +1,31 @@
+augroup CTF_AppendMarkdown
+  autocmd!
+  autocmd BufWritePost assignment*.py silent! call CTF_AppendToMarkdowns()
+augroup END
+
+function! CTF_AppendToMarkdowns()
+  let l:fname = expand('%:t')  " e.g., 'assignment2.py'
+  let l:match = matchlist(l:fname, '\v^(assignment\d+)\.py$')
+  if empty(l:match)
+    return
+  endif
+
+  let l:base = l:match[1]                        " e.g., 'assignment2'
+  let l:dir  = expand('%:p:h') . '/' . l:base . '_files'
+  let l:notes = l:dir . '/notes.md'
+  let l:backup = l:dir . '/backup.md'
+
+  if !isdirectory(l:dir)
+    call mkdir(l:dir, 'p')
+  endif
+
+  " The shell command we'll run
+  let l:cmd = "{ echo '```python'; cat " . expand('%:p') . "; echo '```'; }"
+
+  " Append to notes.md
+  call system(l:cmd . " >> " . shellescape(l:notes))
+  " Append to backup.md
+  call system(l:cmd . " >> " . shellescape(l:backup))
+
+  echom "📎 Appended fenced code to: " . l:notes . " and backup.md"
+endfunction

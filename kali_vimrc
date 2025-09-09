@@ -1,0 +1,21 @@
+set nocompatible
+
+source $VIMRUNTIME/defaults.vim
+
+set noexpandtab
+set tabstop=4
+set shiftwidth=4
+
+autocmd FileType * setlocal noexpandtab tabstop=4 shiftwidth=4
+
+" Enable spell checking for markdown and text files
+augroup spellcheck_text
+        autocmd!
+        autocmd FileType markdown setlocal spell spelllang=en_us
+        autocmd FileType text     setlocal spell spelllang=en_us
+augroup END
+
+autocmd BufWritePost *.py silent! execute "!{ echo '```python'; cat " . expand('%:p') . "; echo '```'; } >> ../writeup.md"
+
+set exrc
+set secure
