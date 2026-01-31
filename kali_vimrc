@@ -18,7 +18,5 @@ augroup spellcheck_text
         autocmd FileType text     setlocal spell spelllang=en_us
 augroup END
 
-autocmd BufWritePost *.py silent! execute "!{ echo '```python'; cat " . expand('%:p') . "; echo '```'; } >> ../writeup.md"
-
 set exrc
 set secure
